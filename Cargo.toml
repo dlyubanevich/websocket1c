@@ -1,7 +1,8 @@
 [package]
 name = "websocket1c"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
+authors = ["Dmitrii Liubanevich"]
 
 [dependencies]
 utf16_lit = "2.0"
