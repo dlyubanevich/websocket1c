@@ -31,7 +31,7 @@ pub struct WebSocket1CAddIn {
     pub send: fn(&mut Self, String) -> Result<bool, ()>,
 
     #[add_in_func(name = "ReceiveMessage", name_ru = "ПолучитьСообщение")]
-    #[arg(Int, default = 1000)]
+    #[arg(Int)]
     #[returns(Str, result)]
     pub receive: fn(&mut Self, i32) -> Result<String, ()>,
 
