@@ -98,7 +98,7 @@ impl WebSocket1CAddIn {
             )
             .await
             {
-                Ok(None) | Err(_) => Ok("".to_owned()),
+                Err(_) | Ok(None) => Ok("".to_owned()),
                 Ok(Some(result)) => match result {
                     Ok(message) => match message.to_text() {
                         Ok(message_text) => Ok(message_text.to_owned()),
