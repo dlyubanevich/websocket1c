@@ -1,0 +1,66 @@
+[tasks.clean]
+command = "cargo"
+args = ["clean"]
+
+[tasks.remove-out.linux]
+command = "rm"
+args = ["-rf", "out"]
+
+[tasks.remove-out.windows]
+script_runner = "powershell"
+script_extension = "ps1"
+script = '''
+Remove-Item -LiteralPath "out" -Force -Recurse -ErrorAction SilentlyContinue
+'''
+
+[tasks.build-release-windows-32.windows]
+command = "cargo"
+args = ["build", "--release", "--target", "i686-pc-windows-msvc"]
+
+[tasks.build-release-windows-64.windows]
+command = "cargo"
+args = ["build", "--release", "--target", "x86_64-pc-windows-msvc"]
+
+[tasks.build-release-linux-32.windows]
+command = "cargo"
+args = ["build", "--release", "--target", "i686-unknown-linux-musl"]
+
+[tasks.build-release-linux-64.windows]
+command = "cargo"
+args = ["build", "--release", "--target", "x86_64-unknown-linux-musl"]
+
+[tasks.build-release-linux-arm.windows]
+command = "cargo"
+args = ["build", "--release", "--target", "aarch64-unknown-linux-musl"]
+
+[tasks.build-release-mac-64.windows]
+command = "cargo"
+args = ["build", "--release", "--target", "x86_64-apple-darwin"]
+
+[tasks.release]
+run_task = { name = [
+    "build-release-windows-32",
+    "build-release-windows-64",
+    "build-release-linux-32",
+    "build-release-linux-64",
+    "build-release-linux-arm",
+    "build-release-mac-64",
+], parallel = true }
+
+[tasks.pack-to-zip.windows]
+script_runner = "powershell"
+script_extension = "ps1"
+script = '''
+New-Item -ItemType Directory -Path out -Force -ErrorAction SilentlyContinue
+cp target/i686-pc-windows-msvc/release/websocket1c.dll out/Websocket1CAddIn_x32.dll
+cp target/x86_64-pc-windows-msvc/release/websocket1c.dll out/Websocket1CAddIn_x64.dll
+cp target/i686-unknown-linux-gnu/release/websocket1c.so out/Websocket1CAddIn_x32.so
+cp target/x86_64-unknown-linux-gnu/release/websocket1c.so out/Websocket1CAddIn_x64.so
+cp target/aarch64-unknown-linux-gnu/release/websocket1c.so out/Websocket1CAddIn_ARM64.so
+cp target/x86_64-apple-darwin/release/websocket1c.dylib out/Websocket1CAddIn_x64.dylib
+cp Manifest.xml out/
+Compress-Archive -DestinationPath out/Websocket1CAddIn.zip -Path out/Websocket1CAddIn_x64.dll, out/Websocket1CAddIn_x32.dll, out/Websocket1CAddIn_x32.so, out/Websocket1CAddIn_x64.so, out/Websocket1CAddIn_ARM64.so, out/Websocket1CAddIn_x64.dylib, out/Manifest.xml -Force
+'''
+
+[tasks.pack]
+dependencies = ["clean", "release", "remove-out", "pack-to-zip"]
