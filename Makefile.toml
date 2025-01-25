@@ -15,11 +15,11 @@ Remove-Item -LiteralPath "out" -Force -Recurse -ErrorAction SilentlyContinue
 
 [tasks.build-release-windows-32.windows]
 command = "cargo"
-args = ["build", "--release", "--target", "i686-pc-windows-gnu"]
+args = ["build", "--release", "--target", "i686-pc-windows-msvc"]
 
 [tasks.build-release-windows-64.windows]
 command = "cargo"
-args = ["build", "--release", "--target", "x86_64-pc-windows-gnu"]
+args = ["build", "--release", "--target", "x86_64-pc-windows-msvc"]
 
 [tasks.build-release-linux-32.windows]
 command = "cargo"
@@ -58,8 +58,8 @@ script_runner = "powershell"
 script_extension = "ps1"
 script = '''
 New-Item -ItemType Directory -Path out -Force -ErrorAction SilentlyContinue
-cp target/i686-pc-windows-gnu/release/websocket1c.dll out/Websocket1CAddIn_x32.dll
-cp target/x86_64-pc-windows-gnu/release/websocket1c.dll out/Websocket1CAddIn_x64.dll
+cp target/i686-pc-windows-msvc/release/websocket1c.dll out/Websocket1CAddIn_x32.dll
+cp target/x86_64-pc-windows-msvc/release/websocket1c.dll out/Websocket1CAddIn_x64.dll
 cp target/i686-unknown-linux-gnu/release/libwebsocket1c.so out/Websocket1CAddIn_x32.so
 cp target/x86_64-unknown-linux-gnu/release/libwebsocket1c.so out/Websocket1CAddIn_x64.so
 cp Manifest.xml out/
