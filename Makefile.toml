@@ -74,7 +74,7 @@ cp target/x86_64-pc-windows-gnu/release/websocket1c.dll out/Websocket1CAddIn_x64
 cp target/i686-unknown-linux-gnu/release/libwebsocket1c.so out/Websocket1CAddIn_x32.so
 cp target/x86_64-unknown-linux-gnu/release/libwebsocket1c.so out/Websocket1CAddIn_x64.so
 cp Manifest.xml out/
-zip -r -j out/Websocket1CAddIn.zip out/Websocket1CAddIn_x64.dll, out/Websocket1CAddIn_x32.dll, out/Websocket1CAddIn_x32.so, out/Websocket1CAddIn_x64.so, out/Manifest.xml
+zip -r -j out/Websocket1CAddIn.zip out/Websocket1CAddIn_x64.dll out/Websocket1CAddIn_x32.dll out/Websocket1CAddIn_x32.so out/Websocket1CAddIn_x64.so Manifest.xml
 '''
 
 [tasks.pack]

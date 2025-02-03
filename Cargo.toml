@@ -1,15 +1,22 @@
 [package]
 name = "websocket1c"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 authors = ["Dmitrii Liubanevich"]
 
 [dependencies]
 utf16_lit = "2.0"
-native_api_1c = "0.10"
+addin1c = "0.5"
 tokio = { version = "1.43", features = ["rt-multi-thread", "time"] }
 tokio-tungstenite = "0.26"
 futures-util = "0.3"
 
 [lib] 
 crate-type = ["cdylib"]
+
+[profile.release]
+opt-level = 3
+strip = true
+panic = "abort"
+lto = true
+codegen-units = 1
